@@ -9,8 +9,8 @@
     <AddTask @add-task='addTaskAsync'/>
     </div>
     <Tasks
-    @toggle-reminder='toggleReminder' 
-    @task-delete="deleteTask" :tasks="tasks"/>
+    @toggle-reminder='toggleReminderAsync' 
+    @task-delete="deleteTaskAsync" :tasks="tasks"/>
     
   </div>
 
@@ -39,6 +39,7 @@ export default {
       tasks: [],
       showAddTask: false
       // TODO: Still needs a backend, because it's not saved sadge 
+      // update : well now it works :D
     }
   },
   methods:{ 
@@ -59,7 +60,8 @@ export default {
   },
 
   async addTaskAsync(task){ 
-    // Add task parameter into db.json
+    // Add the task parameter into db.json
+    // Use the post method, because we need to post stuff
     const res = await fetch('api/tasks',
     {method: 'POST',
     headers: {'Content-type': 'application/json'},
@@ -69,8 +71,48 @@ export default {
     const data = await res.json()
     this.tasks = [...this.tasks,data]
   },
+
+  async deleteTaskAsync(id){
+    if (confirm('Are you sure to delete this task?')){
+      // Create request to delete the task with the id
+      const res = await fetch(`api/tasks/${id}`,
+      {
+        method:'DELETE'
+      })
+
+      // Take the response status, if its '200', meaning no error or OK
+      // then delete the task from this.tasks
+      res.status === 200 ? (this.tasks = this.tasks.filter(
+        (task)=>{return task.id !== id }
+      )) : alert('Some error occured when deleting task')
+      }
+
+  }, 
+
+  async toggleReminderAsync(id){
+    const taskToToggle = await this.fetchTask(id)
+    const updated = {...taskToToggle,
+    reminder: !taskToToggle.reminder
+    }
+    // Create a PUT request, because we want to UPDATE stuff in there
+    // Also needs headers + body parser
+    const res = await fetch(`api/tasks/${id}`,
+    {method: 'PUT',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify(updated)})
+
+    // const data = res.json()
+
+    this.tasks = this.tasks.map(
+        task => task.id === id ? {
+          // Returns the task itself, but changes the reminder attr
+          ...task, reminder: !task.reminder} : task  
+          
+      )
+
+  },
   /**
-   * Sync methodds (deprecated)
+   * Sync methods for front-end
    */
     toggleAddTask(){
       this.showAddTask = !this.showAddTask
@@ -109,6 +151,8 @@ export default {
     },
     
   },
+
+  // Created component lifecycle 
   async created(){
     this.tasks = await this.fetchTasks()
   }

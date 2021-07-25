@@ -50,7 +50,8 @@ export default {
                 return
             }
             const newTask = {
-                id : Math.floor(Math.random() * 10000),
+                // id : Math.floor(Math.random() * 10000),
+                // Don't need this, the server already handles id 
                 text : this.text,
                 day : this.day,
                 reminder : this.reminder

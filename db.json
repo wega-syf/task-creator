@@ -4,37 +4,31 @@
       "id": 1,
       "text": "Doctos appointment",
       "day": "March 1st at 2:30pm",
-      "reminder": false
+      "reminder": true
     },
     {
       "id": 2,
       "text": "Meeting at school",
       "day": "March 3rd at 1:30pm",
-      "reminder": true
+      "reminder": false
     },
     {
       "id": 3,
       "text": "Food Shopping",
       "day": "March 3rd at 11:00am",
-      "reminder": false
-    },
-    {
-      "id": 4,
-      "text": "Play Video Game",
-      "day": "April 1st at 1:00am",
       "reminder": true
     },
     {
-      "id": 2749,
-      "text": "sddddddddd",
-      "day": "cccccccccccccccccc",
-      "reminder": false
+      "text": "Take out the laundry",
+      "day": "This Evening",
+      "reminder": false,
+      "id": 4
     },
     {
-      "id": 7538,
-      "text": "Cleanup houseeeee",
-      "day": "Tomorrow",
-      "reminder": true
+      "text": "Clean bedroom",
+      "day": "This saturday",
+      "reminder": true,
+      "id": 5
     }
   ]
 }
