@@ -6,7 +6,7 @@
     <br>
     <div v-if="showAddTask">
 
-    <AddTask @add-task='addTask'/>
+    <AddTask @add-task='addTaskAsync'/>
     </div>
     <Tasks
     @toggle-reminder='toggleReminder' 
@@ -47,18 +47,30 @@ export default {
    * Async methods to fetch from db.json fake rest-api backend
    */
   async fetchTasks(){
-    const res = await fetch("http://localhost:5000/tasks")
+    const res = await fetch("api/tasks")
     const data = await res.json()
     return data
   },
 
   async fetchTask(id){
-    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const res = await fetch(`api/tasks/${id}`)
     const data = await res.json()
     return data
   },
+
+  async addTaskAsync(task){ 
+    // Add task parameter into db.json
+    const res = await fetch('api/tasks',
+    {method: 'POST',
+    headers: {'Content-type': 'application/json'},
+    body: JSON.stringify(task)})
+
+    // Return the new set of data to be shown
+    const data = await res.json()
+    this.tasks = [...this.tasks,data]
+  },
   /**
-   * Sync methodds
+   * Sync methodds (deprecated)
    */
     toggleAddTask(){
       this.showAddTask = !this.showAddTask
