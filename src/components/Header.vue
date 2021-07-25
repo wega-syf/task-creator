@@ -3,7 +3,8 @@
     <h1>
         {{title}} 
     </h1>
-    <Button @toggle-add-task='$emit("toggle-add-task")' 
+    <Button @toggle-add-task='$emit("toggle-add-task")'
+            v-show="homepage" 
             :title="showAddTask ? 'Close' : 'Add Task'"
             :color="showAddTask ? '#E84855': '#1B998B'"/>
 
@@ -36,7 +37,15 @@ export default {
     components:{
         Button
     },
-    emits:['toggle-add-task']
+    emits:['toggle-add-task'],
+    // Add a computed property to limit the button
+    // from showing at the about page
+    computed:{
+        homepage(){
+            if(this.$route.path ==='/') return true
+            else return false
+        }
+    }
     
 }
 </script>
