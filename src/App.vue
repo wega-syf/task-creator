@@ -42,6 +42,24 @@ export default {
     }
   },
   methods:{ 
+
+  /**
+   * Async methods to fetch from db.json fake rest-api backend
+   */
+  async fetchTasks(){
+    const res = await fetch("http://localhost:5000/tasks")
+    const data = await res.json()
+    return data
+  },
+
+  async fetchTask(id){
+    const res = await fetch(`http://localhost:5000/tasks/${id}`)
+    const data = await res.json()
+    return data
+  },
+  /**
+   * Sync methodds
+   */
     toggleAddTask(){
       this.showAddTask = !this.showAddTask
     },
@@ -79,33 +97,8 @@ export default {
     },
     
   },
-  created(){
-    this.tasks = [
-      {
-        id:1,
-        text: 'Doctos appointment',
-        day: 'March 1st at 2:30pm',
-        reminder: true
-      },
-      {
-        id:2,
-        text: 'Meeting at school',
-        day: 'March 3rd at 1:30pm',
-        reminder: true
-      },
-      {
-        id:3,
-        text: 'Food Shopping',
-        day: 'March 3rd at 11:00am',
-        reminder: false
-      },
-      {
-        id:4,
-        text: 'Play Video Game',
-        day: 'April 1st at 1:00am',
-        reminder: true
-      }
-    ]
+  async created(){
+    this.tasks = await this.fetchTasks()
   }
 }
 </script>

@@ -2,7 +2,10 @@
 
 ## Project setup
 ```
-npm install
+Installation steps:
+1) npm install
+2) npm run backend
+3) npm run serve
 ```
 
 ### Compiles and hot-reloads for development
